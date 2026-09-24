@@ -1,1 +1,774 @@
-# hbdtofilm
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday to Film 💖</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepPink: '#ff4d6d',
+                        sweetPink: '#ff758f',
+                        softPink: '#ffb3c1',
+                        pastelPink: '#ffccd5',
+                        milkPink: '#fff0f3',
+                        creamWhite: '#fff8f9'
+                    },
+                    fontFamily: {
+                        prompt: ['Prompt', 'sans-serif'],
+                        fredoka: ['Fredoka', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .font-cute {
+            font-family: 'Fredoka', 'Prompt', sans-serif;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 179, 193, 0.6);
+            box-shadow: 0 10px 30px -5px rgba(255, 77, 109, 0.15), inset 0 0 15px rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+        }
+
+        /* Gentle Floating Animation */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
+        }
+
+        .animate-float {
+            animation: gentleFloat 4s ease-in-out infinite;
+        }
+
+        /* Floating Background Particles */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-item {
+            position: absolute;
+            list-style: none;
+            animation: animateFloatingItem 12s linear infinite;
+            bottom: -100px;
+        }
+
+        @keyframes animateFloatingItem {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Cursor Effect (Optimized for performance) */
+        .cursor-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: particleFade 0.8s linear forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes particleFade {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+            100% { transform: translate(-50%, -80%) scale(0.3) rotate(90deg); opacity: 0; }
+        }
+
+        /* 3D Flip Card Styles */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .flip-card-front {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #ffccd5;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.1);
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, #ffffff 0%, #fff0f3 100%);
+            border: 2px solid #ff758f;
+            transform: rotateY(180deg);
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.15);
+        }
+
+        /* Candle Flame Flicker */
+        .flame {
+            width: 16px;
+            height: 24px;
+            background: radial-gradient(ellipse at bottom, #fff700 0%, #ff8800 60%, transparent 100%);
+            border-radius: 50% 50% 35% 35%;
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 15px #ffea00, 0 0 25px #ff6600;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); }
+            100% { transform: scale(1.15) rotate(2deg); }
+        }
+
+        /* Multi-tier Chocolate Dripping Cake Design */
+        .multi-cake-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            padding-top: 20px;
+        }
+
+        .tier {
+            background: #8d5b4c;
+            position: relative;
+            border: 3px solid #5a352a;
+            box-shadow: inset 0 -8px 0 #734639, inset 0 15px 0 #a26d5d;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tier-top {
+            width: 170px;
+            height: 50px;
+            border-radius: 12px 12px 6px 6px;
+            z-index: 5;
+        }
+
+        .tier-middle {
+            width: 230px;
+            height: 55px;
+            border-radius: 12px 12px 6px 6px;
+            z-index: 3;
+            margin-top: -3px;
+        }
+
+        .tier-bottom {
+            width: 290px;
+            height: 60px;
+            border-radius: 12px 12px 14px 14px;
+            z-index: 1;
+            margin-top: -3px;
+        }
+
+        .cream-top-layer {
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 12px 12px 0 0;
+            border: 3px solid #5a352a;
+            border-bottom: none;
+            z-index: 10;
+        }
+
+        .drip-drop {
+            background: #ffffff;
+            border: 3px solid #5a352a;
+            border-top: none;
+            position: absolute;
+            z-index: 11;
+        }
+
+        .multi-plate {
+            width: 320px;
+            height: 16px;
+            background: #ffe0e9;
+            border: 3px solid #ff4d6d;
+            border-radius: 12px;
+            margin-top: 1px;
+            box-shadow: 0 8px 15px rgba(255, 77, 109, 0.2);
+            z-index: 0;
+        }
+
+        .single-candle {
+            width: 12px;
+            height: 44px;
+            background: repeating-linear-gradient(0deg, #ffffff, #ffffff 8px, #ff85a2 8px, #ff85a2 16px);
+            border-radius: 3px;
+            position: relative;
+            z-index: 20;
+            margin-bottom: -3px;
+            border: 2px solid #e63956;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        /* Photo Frame Hover Animation */
+        .photo-card {
+            transition: all 0.3s ease;
+        }
+        .photo-card:hover {
+            transform: scale(1.02) rotate(0deg) !important;
+            box-shadow: 0 12px 25px rgba(255, 77, 109, 0.2);
+        }
+
+        /* Buttons */
+        .cute-btn {
+            background: linear-gradient(135deg, #ff758f 0%, #ff4d6d 100%);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.35);
+            transition: all 0.25s ease;
+        }
+        .cute-btn:hover {
+            transform: translateY(-2deg) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.5);
+        }
+    </style>
+</head>
+<body class="relative text-gray-800 antialiased selection:bg-sweetPink selection:text-white" onmousemove="createSparkle(event)" ontouchmove="createSparkle(event.touches[0])">
+
+    <ul class="bg-particles" id="particleContainer"></ul>
+
+    <div id="openingOverlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-milkPink via-pastelPink to-softPink transition-opacity duration-1000">
+        <div class="glass-card max-w-md w-full p-8 text-center space-y-6 animate-float relative">
+            
+            <div class="absolute -top-3 -right-3 text-3xl z-20">🎀</div>
+
+            <div class="relative w-28 h-28 mx-auto">
+                <div class="w-full h-full bg-gradient-to-tr from-sweetPink to-deepPink rounded-3xl flex items-center justify-center shadow-xl border-4 border-white">
+                    <i class="fa-solid fa-gift text-6xl text-white"></i>
+                </div>
+                <div class="absolute -top-3 -right-2 bg-white px-3 py-1 rounded-full text-xs font-bold text-deepPink border-2 border-sweetPink shadow-sm">
+                    For Film 🎀
+                </div>
+            </div>
+
+            <div>
+                <span class="inline-block px-4 py-1.5 text-xs font-bold text-deepPink bg-white rounded-full border border-sweetPink shadow-sm mb-2">
+                    Birthday Gift Box ✨
+                </span>
+                <h1 class="text-3xl md:text-4xl font-cute font-bold text-deepPink leading-tight">
+                    Happy Birthday to Film 💖
+                </h1>
+            </div>
+
+            <button onclick="openSurprise()" class="cute-btn w-full py-4 text-white font-bold rounded-2xl text-lg flex items-center justify-center space-x-2 transition transform active:scale-95 border-2 border-white">
+                <span>จิ้มๆๆๆ 🎁</span>
+            </button>
+        </div>
+    </div>
+
+    <main id="mainContent" class="hidden relative z-10 max-w-4xl mx-auto px-4 py-6 space-y-10">
+
+        <header class="glass-card rounded-2xl p-4 flex justify-between items-center sticky top-4 z-40 shadow-md">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-pastelPink rounded-full flex items-center justify-center text-deepPink border-2 border-white shadow-sm font-bold text-base">
+                    🎀
+                </div>
+                <div>
+                    <span class="font-cute font-bold text-deepPink text-lg block leading-none">Happy Birthday to Film 💖</span>
+                    <span class="text-[10px] text-gray-500 font-medium">Special Birthday Surprise</span>
+                </div>
+            </div>
+            
+            <button id="musicBtn" onclick="toggleAudio()" class="px-3 py-1.5 bg-white hover:bg-milkPink text-deepPink text-base md:text-lg font-bold rounded-xl border-2 border-sweetPink shadow-sm transition active:scale-95">
+                <span id="musicText">🎵</span>
+            </button>
+        </header>
+
+        <section class="glass-card rounded-3xl p-6 md:p-10 text-center space-y-4 relative overflow-hidden">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-white rounded-full border-2 border-pastelPink text-deepPink text-xs md:text-sm font-bold shadow-sm">
+                <span>🎉 Happy Birthday My Sweetheart 💕</span>
+            </div>
+
+            <h1 class="text-3xl md:text-5xl font-cute font-bold text-transparent bg-clip-text bg-gradient-to-r from-deepPink via-sweetPink to-pink-500 leading-tight">
+                Happy Birthday to Film 💖
+            </h1>
+
+            <p class="text-gray-700 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-medium">
+                สุขสันต์วันเกิดนะคะะะ ขอให้แกมีความสุขมากๆ ยิ้มเยอะๆ สดใสและน่ารักตลอดดด ขอให้เป็นปีที่ดีของแกนะคะ 💕
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 pt-4 max-w-md mx-auto">
+                <div class="bg-white/90 p-3.5 rounded-2xl border-2 border-pastelPink shadow-sm">
+                    <p class="text-[11px] text-gray-500 font-semibold">ความน่ารักของแก</p>
+                    <p class="text-base font-bold text-deepPink font-cute">1,000,000% 🎀</p>
+                </div>
+                <div class="bg-white/90 p-3.5 rounded-2xl border-2 border-pastelPink shadow-sm">
+                    <p class="text-[11px] text-gray-500 font-semibold">ความเอาแต่ใจของแก</p>
+                    <p class="text-base font-bold text-deepPink font-cute">1,000,000% 🎀</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 md:p-8 text-center space-y-6 relative overflow-hidden">
+            <div class="space-y-1">
+                <h2 class="text-2xl md:text-3xl font-cute font-bold text-deepPink flex items-center justify-center gap-2">
+                    มาเป่าเค้กกันน 🎂
+                </h2>
+                <p class="text-xs md:text-sm text-gray-600 font-medium">
+                    หลับตา ตั้งใจอธิษฐาน แล้วเป่าเทียนได้เลยยย
+                </p>
+            </div>
+
+            <div class="py-4">
+                <div class="multi-cake-container">
+                    
+                    <div id="flame" class="flame transition-opacity duration-300 mb-1 cursor-pointer" onclick="toggleCandle()"></div>
+                    
+                    <div class="single-candle cursor-pointer" onclick="toggleCandle()"></div>
+
+                    <div class="tier tier-top">
+                        <div class="cream-top-layer"></div>
+                        <div class="drip-drop" style="top: 15px; left: 10px; width: 14px; height: 22px; border-radius: 0 0 8px 8px;"></div>
+                        <div class="drip-drop" style="top: 15px; left: 55px; width: 16px; height: 28px; border-radius: 0 0 10px 10px;"></div>
+                        <div class="drip-drop" style="top: 15px; right: 15px; width: 14px; height: 20px; border-radius: 0 0 8px 8px;"></div>
+                    </div>
+
+                    <div class="tier tier-middle">
+                        <div class="cream-top-layer"></div>
+                        <div class="drip-drop" style="top: 15px; left: 15px; width: 16px; height: 26px; border-radius: 0 0 8px 8px;"></div>
+                        <div class="drip-drop" style="top: 15px; left: 75px; width: 18px; height: 32px; border-radius: 0 0 10px 10px;"></div>
+                        <div class="drip-drop" style="top: 15px; right: 40px; width: 16px; height: 24px; border-radius: 0 0 8px 8px;"></div>
+                    </div>
+
+                    <div class="tier tier-bottom">
+                        <div class="cream-top-layer"></div>
+                        <div class="drip-drop" style="top: 15px; left: 20px; width: 18px; height: 34px; border-radius: 0 0 10px 10px;"></div>
+                        <div class="drip-drop" style="top: 15px; left: 90px; width: 16px; height: 25px; border-radius: 0 0 10px 10px;"></div>
+                        <div class="drip-drop" style="top: 15px; left: 160px; width: 20px; height: 38px; border-radius: 0 0 12px 12px;"></div>
+                        <div class="drip-drop" style="top: 15px; right: 25px; width: 16px; height: 28px; border-radius: 0 0 8px 8px;"></div>
+                    </div>
+
+                    <div class="multi-plate"></div>
+
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-3 pt-2">
+                <button onclick="blowOutCandles()" class="cute-btn px-6 py-2.5 text-white text-xs md:text-sm font-bold rounded-xl shadow-md flex items-center gap-2 active:scale-95">
+                    <i class="fa-solid fa-wind"></i>
+                    <span>เป่าเทียนนน 💨</span>
+                </button>
+                <button onclick="lightCandles()" class="px-4 py-2.5 bg-white hover:bg-milkPink text-deepPink text-xs md:text-sm font-bold rounded-xl border-2 border-pastelPink shadow-sm transition active:scale-95">
+                    <i class="fa-solid fa-fire text-amber-500"></i>
+                    <span>จุดใหม่่่</span>
+                </button>
+            </div>
+
+            <div id="wishBox" class="hidden p-4 bg-white border-2 border-dashed border-deepPink rounded-2xl space-y-2 max-w-md mx-auto shadow-sm">
+                <p class="text-deepPink font-cute font-bold text-base md:text-lg">
+                    ✨ ขอให้สิ่งที่ แกอธิษฐานเป็นจริง ✨
+                </p>
+                <p class="text-xs md:text-sm text-gray-600 font-medium">
+                    สมหวังทุกเรื่อง และก็ขอให้แกมีความสุขมากๆๆๆ 💕
+                </p>
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <div class="text-center space-y-1">
+                <h2 class="text-2xl md:text-3xl font-cute font-bold text-deepPink flex items-center justify-center gap-2">
+                    ช่วงเวลากับแกกก📸
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <div class="photo-card bg-white p-3 rounded-2xl shadow-lg border-2 border-pastelPink transform -rotate-1">
+                    <div class="h-80 md:h-96 rounded-xl overflow-hidden bg-gray-50">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" id="img1" class="w-full h-full object-cover" alt="Memory 1">
+                    </div>
+                </div>
+
+                <div class="photo-card bg-white p-3 rounded-2xl shadow-lg border-2 border-pastelPink transform rotate-1">
+                    <div class="h-80 md:h-96 rounded-xl overflow-hidden bg-gray-50">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" id="img2" class="w-full h-full object-cover" alt="Memory 2">
+                    </div>
+                </div>
+
+                <div class="photo-card bg-white p-3 rounded-2xl shadow-lg border-2 border-pastelPink transform -rotate-1">
+                    <div class="h-80 md:h-96 rounded-xl overflow-hidden bg-gray-50">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" id="img3" class="w-full h-full object-cover" alt="Memory 3">
+                    </div>
+                </div>
+
+                <div class="photo-card bg-white p-3 rounded-2xl shadow-lg border-2 border-pastelPink transform rotate-1">
+                    <div class="h-80 md:h-96 rounded-xl overflow-hidden bg-gray-50">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=" id="img4" class="w-full h-full object-cover" alt="Memory 4">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-2xl mx-auto space-y-3">
+            <p class="text-center text-xs text-gray-500 font-semibold mb-2">
+                👇 ลองจิ้มดูการ์ดแต่ละใบสิคะ ✨
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                
+                <div class="flip-card h-32" onclick="handleCardFlip(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl">🎀</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-xs md:text-sm font-bold text-deepPink font-cute px-1">ขอให้ปีนี้ใจดีกับแกนะคะะ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card h-32" onclick="handleCardFlip(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl">💖</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-xs md:text-sm font-bold text-deepPink font-cute px-1">ขอให้มีความสุขข ยิ้มเยอะๆๆ นะคะะ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card h-32" onclick="handleCardFlip(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl">🌸</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-xs md:text-sm font-bold text-deepPink font-cute px-1">อยู่ด้วยกันไปนานๆนะคะะ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card h-32" onclick="handleCardFlip(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <span class="text-2xl">✨</span>
+                        </div>
+                        <div class="flip-card-back">
+                            <p class="text-xs md:text-sm font-bold text-deepPink font-cute px-1">น้องขี้โมโหห เอาแต่ใจจจ</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="text-center py-6 text-xs text-gray-500 space-y-1">
+            <p class="font-cute text-deepPink font-semibold">Happy Birthday to Film 💖 Made with Love</p>
+            <p>© Special Birthday Wish For My Sweetheart</p>
+        </footer>
+
+    </main>
+
+    <script>
+        /* โหลดภาพของคุณทั้ง 4 รูปฝังลงในโค้ดแบบ Base64 โดยตรง */
+        function loadImagesInline() {
+            const rawImages = {
+                'img1': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=',
+                'img2': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=',
+                'img3': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=',
+                'img4': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA='
+            };
+
+            // อัปเดตรูปจริงที่คุณอัปโหลดเข้ามาแทนที่
+            const userImages = {
+                'img1': 'uploaded:1.jpg-51968f71-67c1-42bb-916f-8c0233ede749',
+                'img2': 'uploaded:2.jpg-27fc1174-82e7-4205-b204-4d4935c6490b',
+                'img3': 'uploaded:3.jpg-0e2f5dcf-25bf-4582-af42-c8ae7d9e7c08',
+                'img4': 'uploaded:4.jpg-14b92468-2d6a-4805-a3d0-06655d97baed'
+            };
+
+            // สร้าง Canvas แปลงภาพของคุณเป็น DataURL จริง
+            const imageList = [
+                { id: 'img1', file: '1.jpg' },
+                { id: 'img2', file: '2.jpg' },
+                { id: 'img3', file: '3.jpg' },
+                { id: 'img4', file: '4.jpg' }
+            ];
+
+            imageList.forEach(item => {
+                const imgEl = document.getElementById(item.id);
+                if (!imgEl) return;
+                
+                const tempImg = new Image();
+                tempImg.crossOrigin = 'anonymous';
+                tempImg.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = tempImg.naturalWidth || 600;
+                    canvas.height = tempImg.naturalHeight || 800;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(tempImg, 0, 0);
+                    try {
+                        imgEl.src = canvas.toDataURL('image/jpeg', 0.85);
+                    } catch(e) {
+                        imgEl.src = item.file;
+                    }
+                };
+                tempImg.onerror = function() {
+                    imgEl.src = item.file;
+                };
+                tempImg.src = item.file;
+            });
+        }
+
+        /* Sparkle Cursor System (ปรับลดความถี่ให้เบาและลื่นไหลมากๆ) */
+        let lastSparkleTime = 0;
+        function createSparkle(e) {
+            if (!e || Date.now() - lastSparkleTime < 180) return; 
+            lastSparkleTime = Date.now();
+
+            const particle = document.createElement('span');
+            particle.className = 'cursor-particle';
+            const sparkles = ['✨', '💖', '🌸'];
+            particle.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
+            particle.style.left = `${e.clientX}px`;
+            particle.style.top = `${e.clientY}px`;
+            particle.style.fontSize = `${12 + Math.random() * 8}px`;
+
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 800);
+        }
+
+        /* Generate Floating Particles */
+        function createFloatingItems() {
+            const container = document.getElementById('particleContainer');
+            const items = ['🎀', '🌸', '✨', '💕', '💖'];
+            for (let i = 0; i < 15; i++) {
+                const li = document.createElement('li');
+                li.className = 'floating-item';
+                li.innerText = items[Math.floor(Math.random() * items.length)];
+                li.style.left = `${Math.random() * 100}%`;
+                li.style.animationDelay = `${Math.random() * 8}s`;
+                li.style.animationDuration = `${10 + Math.random() * 8}s`;
+                li.style.fontSize = `${16 + Math.random() * 12}px`;
+                container.appendChild(li);
+            }
+        }
+
+        /* Card Flip with Confetti */
+        function handleCardFlip(cardElem) {
+            cardElem.classList.toggle('flipped');
+            if (cardElem.classList.contains('flipped')) {
+                confetti({
+                    particleCount: 20,
+                    spread: 45,
+                    origin: { y: 0.8 },
+                    colors: ['#ff4d6d', '#ff758f', '#ffccd5']
+                });
+            }
+        }
+
+        /* Open Surprise Gift Box Function */
+        function openSurprise() {
+            const overlay = document.getElementById('openingOverlay');
+            const main = document.getElementById('mainContent');
+            
+            confetti({
+                particleCount: 120,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff758f', '#ffccd5', '#ffffff']
+            });
+
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                main.classList.remove('hidden');
+            }, 800);
+
+            playBirthdayTune();
+        }
+
+        /* Audio Music Synthesizer (Web Audio API - เต็มเพลง Happy Birthday) */
+        let audioCtx = null;
+        let isPlaying = false;
+        let activeOscillators = [];
+
+        function toggleAudio() {
+            const btnText = document.getElementById('musicText');
+
+            if (isPlaying) {
+                stopBirthdayTune();
+                btnText.innerText = '🔇';
+            } else {
+                playBirthdayTune();
+                btnText.innerText = '🎵';
+            }
+        }
+
+        function playBirthdayTune() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            stopBirthdayTune();
+            isPlaying = true;
+
+            const notes = [
+                { note: 261.63, duration: 0.35 },
+                { note: 261.63, duration: 0.35 },
+                { note: 293.66, duration: 0.70 },
+                { note: 261.63, duration: 0.70 },
+                { note: 349.23, duration: 0.70 },
+                { note: 329.63, duration: 1.20 },
+
+                { note: 261.63, duration: 0.35 },
+                { note: 261.63, duration: 0.35 },
+                { note: 293.66, duration: 0.70 },
+                { note: 261.63, duration: 0.70 },
+                { note: 392.00, duration: 0.70 },
+                { note: 349.23, duration: 1.20 },
+
+                { note: 261.63, duration: 0.35 },
+                { note: 261.63, duration: 0.35 },
+                { note: 523.25, duration: 0.70 },
+                { note: 440.00, duration: 0.70 },
+                { note: 349.23, duration: 0.70 },
+                { note: 329.63, duration: 0.70 },
+                { note: 293.66, duration: 1.20 },
+
+                { note: 466.16, duration: 0.35 },
+                { note: 466.16, duration: 0.35 },
+                { note: 440.00, duration: 0.70 },
+                { note: 349.23, duration: 0.70 },
+                { note: 392.00, duration: 0.70 },
+                { note: 349.23, duration: 1.50 }
+            ];
+
+            let currentTime = audioCtx.currentTime;
+
+            notes.forEach((item) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(item.note, currentTime);
+
+                gain.gain.setValueAtTime(0.12, currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, currentTime + item.duration - 0.05);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(currentTime);
+                osc.stop(currentTime + item.duration);
+
+                activeOscillators.push(osc);
+                currentTime += item.duration;
+            });
+        }
+
+        function stopBirthdayTune() {
+            if (activeOscillators.length > 0) {
+                activeOscillators.forEach(osc => {
+                    try { osc.stop(); } catch(e){}
+                });
+                activeOscillators = [];
+            }
+            isPlaying = false;
+        }
+
+        /* Single Candle blowing interactivity */
+        let isCandleLit = true;
+
+        function toggleCandle() {
+            const flame = document.getElementById('flame');
+            if (isCandleLit) {
+                flame.style.opacity = '0';
+                isCandleLit = false;
+                confetti({
+                    particleCount: 100,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#ff4d6d', '#ff758f', '#ffccd5']
+                });
+                document.getElementById('wishBox').classList.remove('hidden');
+            } else {
+                flame.style.opacity = '1';
+                isCandleLit = true;
+                document.getElementById('wishBox').classList.add('hidden');
+            }
+        }
+
+        function blowOutCandles() {
+            const flame = document.getElementById('flame');
+            flame.style.opacity = '0';
+            isCandleLit = false;
+            confetti({
+                particleCount: 100,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff758f', '#ffccd5']
+            });
+            document.getElementById('wishBox').classList.remove('hidden');
+        }
+
+        function lightCandles() {
+            const flame = document.getElementById('flame');
+            flame.style.opacity = '1';
+            isCandleLit = true;
+            document.getElementById('wishBox').classList.add('hidden');
+        }
+
+        window.onload = function() {
+            createFloatingItems();
+            loadImagesInline();
+        };
+    </script>
+</body>
+</html>
